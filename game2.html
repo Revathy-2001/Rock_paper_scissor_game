@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .logo{
+            max-width: 400px;
+            width: 30%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 10%;
+            position: relative;
+            top: 0px;
+        }
+        img{
+            border-radius: 50%;
+        }
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            background-color: rgb(12, 12, 56);
+            background: url(RPSGameImages/bg3.jpg);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            /* overflow-x: hidden; */
+        }
+        .stonepaperscissor{
+            max-width: 400px;
+            margin-left: 35%;
+            letter-spacing: 10px;
+        }
+        .stone,.paper,.scissor{
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            border-radius: 50%;
+            /* transform: rotate3d(1,1,0,40deg); */
+        }
+        button{
+            border: none;
+            outline: none;
+            background-color: transparent;
+        }
+        .stone:hover{
+            transform: rotate(0deg);
+            background: #35d4cc;
+            box-shadow: 0 0 40px #2ce4f1;
+        }
+        .paper:hover{
+            transform: rotate(0deg);
+            background: #35d4cc;
+            box-shadow: 0 0 40px #2ce4f1;
+        }
+        .scissor:hover{ 
+            transform: rotate(0deg);
+            background: #4de7e0;
+            box-shadow: 0 0 40px #2ce4f1;
+        }
+        .humanvscom{
+            letter-spacing: 450px;
+            width: 100px;
+            height: 100px;
+            margin-left: 15rem;
+        }
+        img[src = "RPSGameImages/scissorhuman.jpg"]{
+            width: 160px;
+            height: 160px;
+        }
+        img[src = "RPSGameImages/rockcom.jpg"]{
+            width: 160px;
+            height: 160px;
+        }
+        img[src = "RPSGameImages/papercom.jpg"]{
+            width: 160px;
+            height: 160px;
+        }
+        img[src = "RPSGameImages/scissorcom.jpg"]{
+            width: 160px;
+            height: 160px;
+        }
+        .round{
+            color: #4de7e0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+        .computer{
+            color:  #4de7e0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 1050px;
+        }
+        .gamer{
+            color:  #4de7e0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            display: none;
+            position: fixed;
+            top: 50px;
+            left: 1050px;
+        }
+        .ties{
+            color: #4de7e0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            display: none;
+            position: fixed;
+            top: 90px;
+            left: 1050px;
+        }
+        .result{
+            color:rgb(255, 99, 71);
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 4rem;
+            position: relative;
+            left: 500px;
+        }
+        .name{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color: rgb(255, 99, 71);
+            font-size: 1.5rem;
+            margin-left: 470px;
+            word-spacing: 60px;
+        }
+
+    </style>
+</head>
+<body>
+    <img src="RPSGameImages/transparenlogo..png" class="logo">
+    <span class="counts">
+        <span id = "Roundcount" class="round"></span>
+        <span id = "ComputerCount" class="computer"></span>
+        <span id = "GamerCount" class="gamer"></span>
+        <span id = "TiesCount" class="ties"></span>
+    </span>
+    <span id = "won_lose" class="result" style="text-align: center;">Lets Play!!!</span>
+    <br><br>
+    <span class="humanvscom">
+        <img src="RPSGameImages/rocksample.jpg" style = " border: 5px solid black;" width = "160px" id = "samplehuman"> 
+        <img src="RPSGameImages/rocksample.jpg" style = " border: 5px solid black;" width = "160px" id = "samplecom">
+    </span>
+    <br><br>
+    <span class="stonepaperscissor">
+        <button onclick="document.getElementById('samplehuman').src='RPSGameImages/rockhuman.jpg'"><img src="RPSGameImages/stone-removebg-preview.png" class="stone" id = "stone" onclick="choosePic()"></button>
+        <button onclick="document.getElementById('samplehuman').src='RPSGameImages/paperhuman.jpg'"><img src="RPSGameImages/paper-removebg-preview.png" class="paper" id = "paper" onclick="choosePic()"></button>
+        <button onclick="document.getElementById('samplehuman').src='RPSGameImages/scissorhuman.jpg'"><img src="RPSGameImages/scissor-removebg-preview.png" class="scissor" id = "scissor" onclick="choosePic()"></button>
+    </span>
+    <br>
+    <span class="name">
+        <span>stone</span>
+        <span>paper</span>
+        <span>scissor</span>
+    </span>
+    <script>
+       var myPix = new Array("RPSGameImages/rockcom.jpg","RPSGameImages/papercom.jpg","RPSGameImages/scissorcom.jpg");
+       var gamearr = new Array("stone","paper","scissor");
+       roundCnt = 0;
+       compCnt = 0;
+       userCnt = 0;
+       tieCnt = 0;
+
+       function choosePic() {
+            var randomNum = Math.floor(Math.random() * (2 - 0) + 0);
+            document.getElementById("samplecom").src = myPix[randomNum];
+          
+            if(event.toElement.id == "paper" && gamearr[randomNum] == "scissor"){
+                compCnt += 1;
+                document.getElementById('won_lose').innerHTML = "LOST &#128577";
+                document.getElementById('ComputerCount').style.display = "block";
+            } 
+            else if(event.toElement.id == "stone" && gamearr[randomNum] == "paper"){
+                compCnt += 1;
+                document.getElementById('won_lose').innerHTML = "LOST &#128577";
+                document.getElementById('ComputerCount').style.display = "block";
+            }
+            else if(event.toElement.id == "scissor" && gamearr[randomNum] == "stone"){
+                compCnt += 1;  
+                document.getElementById('won_lose').innerHTML = "LOST &#128577";
+                document.getElementById('ComputerCount').style.display = "block";
+            }
+            else if(event.toElement.id == "scissor" && gamearr[randomNum] == "paper"){
+                userCnt += 1;
+                document.getElementById('won_lose').innerHTML = "WON &#129395;";
+                document.getElementById('GamerCount').style.display = "block";
+            }
+            else if(event.toElement.id == "stone" && gamearr[randomNum] == "scissor"){
+              userCnt += 1;
+              document.getElementById('won_lose').innerHTML = "WON &#129395;";
+              document.getElementById('GamerCount').style.display = "block";
+            }
+            else if(event.toElement.id == "paper" && gamearr[randomNum] == "stone"){
+              userCnt += 1;
+              document.getElementById('won_lose').innerHTML = "WON &#129395;";
+              document.getElementById('GamerCount').style.display = "block";
+            }
+            else if(event.toElement.id == "scissor" && gamearr[randomNum] == "scissor"){
+              tieCnt += 1;
+              document.getElementById('won_lose').innerHTML = "DRAW &#129322;";
+              document.getElementById('TiesCount').style.display = "block";
+            }
+            else if(event.toElement.id == "stone" && gamearr[randomNum] == "stone"){
+              tieCnt += 1;
+              document.getElementById('won_lose').innerHTML = "DRAW &#129322;";
+              document.getElementById('TiesCount').style.display = "block";
+            }
+            else if(event.toElement.id == "paper" && gamearr[randomNum] == "paper"){
+              tieCnt += 1;
+              document.getElementById('won_lose').innerHTML = "DRAW &#129322;";
+              document.getElementById('TiesCount').style.display = "block";
+            }
+            document.getElementById('ComputerCount').innerHTML = "COMPUTER " + compCnt;
+            document.getElementById('GamerCount').innerHTML = "YOU WIN " + userCnt;
+            document.getElementById('TiesCount').innerHTML = "TIES " + tieCnt;
+            roundCnt += 1;
+            document.getElementById('Roundcount').style.display = "block";
+            document.getElementById('Roundcount').innerHTML = "ROUND " + roundCnt;
+           }
+    </script>
+</body>
+</html>
